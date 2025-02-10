@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?><!-- Uploaded to: SVG Repo, www.svgrepo.com, Generator: SVG Repo Mixer Tools -->
+<svg height="100" width="100" xmlns="http://www.w3.org/2000/svg">
+	<defs>
+      <linearGradient id="grad">
+        <stop offset="50%" stop-color="#546bff"/>
+        <stop offset="50%" stop-color="#bd0000"/>
+      </linearGradient>
+    </defs>
+  <circle r="45" cx="50" cy="50" fill="url(#grad)" />
+</svg> 

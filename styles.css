@@ -1,0 +1,67 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+table {
+    font-size: 50px;
+}
+
+.center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.turnlogo {
+    margin-left: 50%;
+    margin-right: 50%;
+    margin-top: 3%;
+    transform: translate(-50%, 0);
+    cursor: pointer;
+}
+
+.restart{
+    height:100%;
+    width:100%;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    
+}
+
+td {
+    border: 2px solid white;
+    background-color: #33363b;
+    text-align: center;
+}
+
+td:hover{
+    transition:border-color 200ms cubic-bezier(1,.45,.5,1);
+    border-color:red;
+}
+
+.playpiece {
+    background-color: white;
+    height: 70px;
+    width: 70px;
+    user-select: none;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 100ms cubic-bezier(1,.45,.5,1);
+}
+
+.playanchor{
+    cursor: pointer;
+    margin: 3px;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.titillium-web-regular {
+    font-family: "Titillium Web", serif;
+    font-weight: 400;
+    font-style: normal;
+}

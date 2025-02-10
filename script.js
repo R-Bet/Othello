@@ -55,6 +55,7 @@ function RefreshTable() {
         for (let j = 0; j < board[i].length; j++) {
             let playpiece = document.getElementById('playpiece' + i + j);
             playpiece.style = "background-color: " + ColorByPiece(board[i][j]);
+            playpiece.parentElement.parentElement.className = "";
             playpiece.parentElement.setAttribute("onclick", `Erm();`);
         }
     }
@@ -109,6 +110,7 @@ function MarkUsableAround(i, j) {
             if (IsUsable(i + o[0], j + o[1], -o[0], -o[1])) {
                 let playpiece = document.getElementById('playpiece' + (i + o[0]) + (j + o[1]));
                 playpiece.style = "background-color:gray;";
+                playpiece.parentElement.parentElement.className = GetHover();
                 playpiece.parentElement.setAttribute("onclick", `ClickPiece(${i + o[0]}, ${j + o[1]});`);
                 AnyUsable = true;
             }
@@ -182,6 +184,12 @@ function ClickPiece(i, j) {
     MarkAvailable();
 
     RefreshTable();
+}
+
+function GetHover() {
+    if (turn == 0)
+        return "hover-blue";
+    return "hover-red";
 }
 
 function TurnUp(i, j) {

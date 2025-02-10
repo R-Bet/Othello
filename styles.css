@@ -34,12 +34,16 @@ table {
 td {
     border: 2px solid white;
     background-color: #33363b;
+    transition: border-color 200ms cubic-bezier(1,.45,.5,1);
     text-align: center;
 }
 
-td:hover{
-    transition:border-color 200ms cubic-bezier(1,.45,.5,1);
-    border-color:red;
+.hover-blue:hover {
+    border-color: #546bff;
+}
+
+.hover-red:hover {
+    border-color: #bd0000;
 }
 
 .playpiece {

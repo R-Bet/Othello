@@ -26,6 +26,8 @@ var Offsets =
 
 var turn = 0;
 
+var dog = false;
+
 function InitializeTable() {
     let table = document.getElementById("gametable");
     for (let i = 0; i < board.length; i++) {
@@ -55,8 +57,11 @@ function RefreshTable() {
         for (let j = 0; j < board[i].length; j++) {
             let playpiece = document.getElementById('playpiece' + i + j);
             playpiece.style = "background-color: " + ColorByPiece(board[i][j]);
+
             playpiece.parentElement.parentElement.className = "";
             playpiece.parentElement.setAttribute("onclick", `Erm();`);
+            playpiece.parentElement.setAttribute("playvalue", "" + 0);
+            playpiece.parentElement.style = "cursor:default;";
         }
     }
 
@@ -103,15 +108,20 @@ function MarkUsable() {
 }
 
 function MarkUsableAround(i, j) {
+    let capturedtotal = 0;
     let AnyUsable = false;
     if (board[i][j] == GetNotPlayer()) {
         for (let x = 0; x < Offsets.length; x++) {
             o = Offsets[x];
-            if (IsUsable(i + o[0], j + o[1], -o[0], -o[1])) {
+            let captured = IsUsable(i + o[0], j + o[1], -o[0], -o[1]);
+            if (captured > 0) {
+                capturedtotal += captured;
                 let playpiece = document.getElementById('playpiece' + (i + o[0]) + (j + o[1]));
                 playpiece.style = "background-color:gray;";
+                playpiece.parentElement.style = "cursor:pointer;";
                 playpiece.parentElement.parentElement.className = GetHover();
                 playpiece.parentElement.setAttribute("onclick", `ClickPiece(${i + o[0]}, ${j + o[1]});`);
+                playpiece.parentElement.setAttribute("playvalue", capturedtotal);
                 AnyUsable = true;
             }
         }
@@ -124,22 +134,24 @@ function IsUsable(InitialI, InitialJ, OffsetI, OffsetJ) {
     if (board[InitialI][InitialJ] != ' ') return;
     let i = InitialI + OffsetI;
     let j = InitialJ + OffsetJ;
+    let captured = 0;
 
     while (Inbounds(i, j)) {
         if (board[i][j] == ' ')
-            return false;
+            return 0;
 
         if (board[i][j] == GetPlayer())
             break;
 
         i += OffsetI;
         j += OffsetJ;
+        captured++;
     }
 
     if (!Inbounds(i, j))
-        return false;
+        return 0;
 
-    return true;
+    return captured;
 }
 
 function WhoWon() {
@@ -179,11 +191,14 @@ function ClickPiece(i, j) {
 
     TurnUp(i, j);
 
-    turn = turn == 0 ? 1 : 0;
-
     MarkAvailable();
 
     RefreshTable();
+
+    if (dog) {
+        if (turn == 1)
+            setTimeout(MakeBotPlay(), 5000);
+    }
 }
 
 function GetHover() {
@@ -192,10 +207,33 @@ function GetHover() {
     return "hover-red";
 }
 
+function MakeBotPlay() {
+    let highest = GetHighestPlayvalue()
+    highest.click();
+}
+
+function GetHighestPlayvalue() {
+    let maxval = 0;
+    let maxpiece;
+    for (let i = 0; i < board.length; i++) {
+        for (let j = 0; j < board[i].length; j++) {
+            let playpiece = document.getElementById('playpiece' + i + "" + j).parentElement;
+            let playval = playpiece.getAttribute("playvalue");
+            if (playval == null) continue;
+            if (playval > maxval) {
+                maxval = playval;
+                maxpiece = playpiece;
+            }
+        }
+    }
+    return maxpiece;
+}
+
 function TurnUp(i, j) {
     current = board[i][j];
 
     player = GetPlayer();
+    turn = turn == 0 ? 1 : 0;
     notplayer = player == 'x' ? 'o' : 'x';
 
     CheckAndFillAll(player, i, j);
@@ -268,3 +306,25 @@ function GetNotPlayer() {
     return 'x';
 }
 
+function ToggleDog() {
+    dog = !dog;
+
+    if (dog) {
+        document.getElementById("playpiece999").style.backgroundColor = "white";
+        document.getElementById("playpiece999").style.color = "black";
+        document.getElementById("playpiece999").querySelector("span").innerHTML = "DOG: ON";
+    }
+    else {
+        document.getElementById("playpiece999").style.backgroundColor = "black";
+        document.getElementById("playpiece999").style.color = "white";
+        document.getElementById("playpiece999").querySelector("span").innerHTML = "DOG: OFF";
+    }
+}
+
+function ShowTutorial() {
+    document.getElementById("tutorialwindow").style.display = "flex";
+}
+
+function CloseTutorial() {
+    document.getElementById("tutorialwindow").style.display = "none";
+}

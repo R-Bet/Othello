@@ -12,12 +12,46 @@
 </head>
 
 <body class="center" onload="InitializeTable()">
+    <div class="tutorial center" id="tutorialwindow" style="display:none;">
+        <a onclick="CloseTutorial()" class="closetutorial pointer largetext">X</a>
+        <div class="tutorialcontent titillium-web-regular">
+            <h1>
+                Welcome to Othello!
+            </h1>
+            <p style="font-size: 20px;">
+                This game is played on an 8×8 board with two players or one player against a bot.
+                There are two colors: blue and red. The blue player goes first.
+                <br />
+                Gray pieces indicate valid moves—only these spaces can be clicked.
+                <br />
+                <br />
+                The goal is to have the most pieces of your color by the end of the game or to prevent your opponent from making any legal moves.
+                <br />
+                <br />
+                When you place a piece, any opponent's pieces in a straight line (horizontally, vertically, or diagonally) between your newly placed piece and another of your pieces will be flipped to your color. For a flip to happen, your piece must "sandwich" the opponent's pieces, meaning there must be one of your pieces at both ends of the line.
+                <br />
+                <br />
+                Use the DOG button to toggle the red player's bot.
+            </p>
+
+        </div>
+    </div>
     <table id="gametable">
     </table>
 
-    <a id="playpiece99" class="playpiece turnlogo">
-        <span class="restart titillium-web-regular" onclick="RestartGame()">RESTART</span>
-    </a>
+    <div class="menu">
+        <a id="playpiece99" class="playpiece pointer menuitem">
+            <span class="restart titillium-web-regular" onclick="RestartGame()">RESTART</span>
+        </a>
+
+        <a id="playpiece999" class="playpiece pointer menuitem dogbutton" style="color:white;background-color:black;">
+            <span class="restart titillium-web-regular" onclick="ToggleDog()">DOG: OFF</span>
+        </a>
+
+        <a id="playpiece999" class="playpiece pointer menuitem" style="color:black;background-color:white;">
+            <span class="restart titillium-web-regular largetext" onclick="ShowTutorial()">i</span>
+        </a>
+    </div>
 </body>
 
 </html>
